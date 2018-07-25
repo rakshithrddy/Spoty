@@ -1,4 +1,5 @@
 from django.db import models
+from django.urls import reverse
 
 
 class Album(models.Model):
@@ -7,8 +8,11 @@ class Album(models.Model):
     genre = models.CharField(max_length=100)
     album_logo = models.CharField(max_length=1000)
 
+    def get_absolute_url(self):
+        return reverse('music:details', kwargs={'pk': self.pk})
+
     def __str__(self):
-        return f'{self.album_title} - {self.artist}'
+        return self.album_title + '-' + self.artist
 
 
 class Song(models.Model):
@@ -17,4 +21,4 @@ class Song(models.Model):
     song_title = models.CharField(max_length=250)
 
     def __str__(self):
-        return f'{self.song_title}'
+        return self.song_title
